@@ -42,6 +42,10 @@ void Send_CarBus(uint8_t cmd,float fdata1,float fdata2,float fdata3,float fdata4
 	int signal2 = (fdata2>=0)?0:1;
 	int signal3 = (fdata3>=0)?0:1;
 	int signal4 = (fdata4>=0)?0:1;
+	data1 = abs(data1);
+	data2 = abs(data2);
+	data3 = abs(data3);
+	data4 = abs(data4);
 	memset(uart6_tx_buff,0,sizeof(uart6_tx_buff));
 	uart6_tx_buff[0] = 0x51;
 	uart6_tx_buff[20] = 0x52;
@@ -98,11 +102,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 							Send_CarBus(0x04,xa,xb,xc,xd,rnd);
 						break;
 					case 0x05:
-						sign1 = (mybuff[4]==0) ? 1: -1;
-						sign2 = (mybuff[8]==0) ? 1: -1;
-						sign3 = (mybuff[12]==0) ? 1: -1;
-						sign4 = (mybuff[16]==0) ? 1: -1;
-				
+						sign1 = (mybuff2[4]==0) ? 1: -1;
+						sign2 = (mybuff2[8]==0) ? 1: -1;
+						sign3 = (mybuff2[12]==0) ? 1: -1;
+						sign4 = (mybuff2[16]==0) ? 1: -1;
 						xa = sign1*((mybuff2[5]-'0')*100+(mybuff2[6]-'0')*10+(mybuff2[7]-'0'));
 						xb = sign2*((mybuff2[9]-'0')*100+(mybuff2[10]-'0')*10+(mybuff2[11]-'0'));
 						xc = sign3*((mybuff2[13]-'0')*100+(mybuff2[14]-'0')*10+(mybuff2[15]-'0'));

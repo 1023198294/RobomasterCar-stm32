@@ -3,7 +3,7 @@
 <title>Static Call Graph - [RMv3testDemo\RMv3testDemo.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image RMv3testDemo\RMv3testDemo.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Fri Mar 27 18:00:03 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Mon Mar 30 10:48:29 2020
 <BR><P>
 <H3>Maximum Stack Usage =        192 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1283,7 +1283,7 @@ Global Symbols
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
 </UL>
 
-<P><STRONG><a name="[115]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 868 bytes, Stack size 40 bytes, test_uart.o(i.HAL_UART_RxCpltCallback))
+<P><STRONG><a name="[115]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 844 bytes, Stack size 40 bytes, test_uart.o(i.HAL_UART_RxCpltCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = HAL_UART_RxCpltCallback &rArr; Send_CarBus &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_IT
@@ -1548,7 +1548,7 @@ Global Symbols
 <P><STRONG><a name="[1b]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.SVC_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f427xx.o(RESET)
 </UL>
-<P><STRONG><a name="[116]"></a>Send_CarBus</STRONG> (Thumb, 340 bytes, Stack size 64 bytes, test_uart.o(i.Send_CarBus))
+<P><STRONG><a name="[116]"></a>Send_CarBus</STRONG> (Thumb, 364 bytes, Stack size 64 bytes, test_uart.o(i.Send_CarBus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = Send_CarBus &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit

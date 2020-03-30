@@ -303,7 +303,7 @@ int main(void)
   while (1)
   {
 	
-
+			
 			//		second_bodan_count++;
 //		if(second_bodan_count>=40000)
 //			second_bodan_count=0;
