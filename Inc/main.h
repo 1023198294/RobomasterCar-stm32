@@ -70,6 +70,7 @@
 void ReadContral(void);
 void ReadEncode(void);
 void Contral(void);
+void Contral2(void);
 /* USER CODE END Private defines */
 
 /**

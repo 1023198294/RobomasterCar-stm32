@@ -20,6 +20,7 @@ uint8_t mybuff[30] = {0};
 uint8_t mybuff2[30] = {0};
 extern int Yaw_init;
 extern int ecode1,ecode2,ecode3,ecode4;
+extern int Speed1,Speed2,Speed3,Speed4;
 uint8_t aTxMessage[100] = {0};
 float Read_Pitch = 0 , Read_GYaw = 0 , 	Read_Roll = 0  ;
 float Read_wx = 0 , Read_wy = 0 , 	Read_wz = 0  ;
@@ -32,6 +33,8 @@ int rnd = 0;
 //int bg = 0,xa = 0,xb = 0,xc = 0,xd = 0,ed = 0,ptr=0;
 //it will be auto callback when usart receive msg completely
 extern int xa,xb,xc,xd;
+extern int CAR_BUS;
+extern int serial_lock;
 int Q_DATA_TYPE;
 void Send_CarBus(uint8_t cmd,float fdata1,float fdata2,float fdata3,float fdata4,int rnd){
 	int data1 = (int) fdata1;
@@ -95,21 +98,22 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 					case 0x01://请求确认连接,返回OK帧
 							//void Send_CarBus(uint8_t cmd,int data1,int data2,int data3,int data4,int rnd){
 								Send_CarBus(0x02,0,0,0,0,rnd);
+								CAR_BUS = 1;
 						break;
 					case 0x03:
 						Q_DATA_TYPE = mybuff2[7]-'0';
 						if (Q_DATA_TYPE==1)
-							Send_CarBus(0x04,xa,xb,xc,xd,rnd);
+							Send_CarBus(0x04,ecode1,ecode2,ecode3,ecode4,rnd);
 						break;
 					case 0x05:
 						sign1 = (mybuff2[4]==0) ? 1: -1;
 						sign2 = (mybuff2[8]==0) ? 1: -1;
 						sign3 = (mybuff2[12]==0) ? 1: -1;
 						sign4 = (mybuff2[16]==0) ? 1: -1;
-						xa = sign1*((mybuff2[5]-'0')*100+(mybuff2[6]-'0')*10+(mybuff2[7]-'0'));
-						xb = sign2*((mybuff2[9]-'0')*100+(mybuff2[10]-'0')*10+(mybuff2[11]-'0'));
-						xc = sign3*((mybuff2[13]-'0')*100+(mybuff2[14]-'0')*10+(mybuff2[15]-'0'));
-						xd = sign4*((mybuff2[17]-'0')*100+(mybuff2[18]-'0')*10+(mybuff2[19]-'0'));
+						Speed1 = sign1*((mybuff2[5]-'0')*100+(mybuff2[6]-'0')*10+(mybuff2[7]-'0'));
+						Speed2 = sign2*((mybuff2[9]-'0')*100+(mybuff2[10]-'0')*10+(mybuff2[11]-'0'));
+						Speed3 = sign3*((mybuff2[13]-'0')*100+(mybuff2[14]-'0')*10+(mybuff2[15]-'0'));
+						Speed4 = sign4*((mybuff2[17]-'0')*100+(mybuff2[18]-'0')*10+(mybuff2[19]-'0'));
 						Send_CarBus(0x06,0,0,0,0,rnd);
 						break;
 					case 0x07:

@@ -159,7 +159,10 @@ int Yaw_Location_PID_Right(int16_t R_value,int16_t C_value);
 int Yaw_Speed_PID_Left(int16_t R_value,int16_t C_value);
 int Pitch_Location_PID_Right(int16_t R_value,int16_t C_value);
 int Pitch_Speed_PID_Left(int16_t R_value,int16_t C_value);
-int xa,xb,xc,xd;
+int xa,xb,xc,xd;//for test
+int CAR_BUS;
+int serial_lock;
+
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
@@ -224,8 +227,10 @@ int main(void)
 	xb = 200;
 	xc = 300;
 	xd = 400;
+	CAR_BUS = 0;
+	serial_lock = 1;
 	HAL_Init();
-
+	
   /* Configure the system clock */
   SystemClock_Config();
 
@@ -302,8 +307,7 @@ int main(void)
 	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_2,GPIO_PIN_SET);//取弹气缸1缩腿
   while (1)
   {
-	
-			
+			//printf("%d %d %d %d %d %d \n" , ch0 , ch1 , ch2 , ch3 , s1 , s2);
 			//		second_bodan_count++;
 //		if(second_bodan_count>=40000)
 //			second_bodan_count=0;
@@ -392,6 +396,29 @@ if(ecode4 == -3) ecode4 = 0 ;
 	
 	//printf("ecode : %d  %d  %d  %d  %d  %d  %d  %d \n" , ecode1 , ecode2 , ecode3 , ecode4 , ecode5 , ecode6 , ecode7 , ecode8);
 }
+
+
+
+void Contral2(){
+/****************************可左右平移，上下俯仰，前进后退***********************************/
+/*****************************普通模式云台Yaw轴不动，底盘可旋转，云台Pitch可俯仰************************************/
+		//Speed1 = ((1024 - ch1) + -(1024 - ch0))*12 -Yaw_Chassis_Speed;
+		//Speed2 = -((1024 - ch1) + (1024 - ch0))*12 -Yaw_Chassis_Speed;
+		//Speed3 = ((1024 - ch1) + (1024 - ch0))*12 -Yaw_Chassis_Speed;
+		//Speed4 = -((1024 - ch1) + -(1024 - ch0))*12 -Yaw_Chassis_Speed;
+		if (CAR_BUS == 1){
+		NUM1 = SpeedPID(ecode1 , Speed1 , NUM1 , 0);
+		NUM2 = SpeedPID(ecode2 , Speed2 , NUM2 , 1);
+		NUM3 = SpeedPID(ecode3 , Speed3 , NUM3 , 2);
+		NUM4 = SpeedPID(ecode4 , Speed4 , NUM4 , 3);
+		}else{
+			NUM1 = 0;
+			NUM2 = 0;
+			NUM3 = 0;
+			NUM4 = 0;
+		}
+}
+
 void Contral(){
 	if(Dbus == 1){
 /****************************可左右平移，上下俯仰，前进后退***********************************/

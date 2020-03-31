@@ -55,6 +55,7 @@ extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart6;
 extern int NUM1 , NUM2 , NUM3 , NUM4  , NUM5 , NUM6 , NUM7 , NUM8;
+extern int serial_lock;
 uint8_t can1_rx_data_buf[8][6];
 
 /*******遥控器所需参数*******/
@@ -339,9 +340,8 @@ void TIM6_DAC_IRQHandler(void)
 	ReadContral();
 	ReadEncode();
 	//Contral();
-
-  //CAN_Send_Msg(&hcan1 , NUM1 , NUM2 , NUM3 , NUM4 , 0x200 , 0x08 );
-	
+	Contral2();
+	CAN_Send_Msg(&hcan1 , NUM1 , NUM2 , NUM3 , NUM4 , 0x200 , 0x08 );
 	//CAN_Send_Msg(&hcan1 ,NUM5 , NUM6 , 0 , 0 , 0x1FF , 0x08 );
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }
